@@ -1,31 +1,28 @@
-const Pessoa = require("../models/exercicio.js");
+const Cliente = require("../models/cliente.js");
 
 class RepositoryExercicio {
   async PegarUm(id) {
-    return Pessoa.findOne({
+    return Cliente.findOne({
       where: { id },
     });
   }
 
   async PegarTodos() {
-    return Pessoa.findAll();
+    return Cliente.findAll();
   }
 
-  async Add(id, nome, email, senha) {
-    return Pessoa.create({
-      id,
+  async Add(nome, telefone) {
+    return Cliente.create({
       nome,
-      email,
-      senha,
+      telefone
     });
   }
 
-  async Alterar(id, nome, email, senha) {
-    return Pessoa.update(
+  async Alterar(id, nome, telefone) {
+    return Cliente.update(
       {
         nome,
-        email,
-        senha,
+        telefone
       },
       {
         where: { id },
@@ -34,7 +31,7 @@ class RepositoryExercicio {
   }
 
   async Deletar(id) {
-    return Pessoa.destroy({
+    return Cliente.destroy({
       where: { id },
     });
   }

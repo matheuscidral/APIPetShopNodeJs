@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../database");
 
-const Pessoa = sequelize.define(
-  "pessoas",
+const Cliente = sequelize.define(
+  "clientes",
   {
     id: {
       primaryKey: true,
@@ -12,14 +12,9 @@ const Pessoa = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    email: {
+    telefone: {
+      type: DataTypes.STRING,
       unique: true,
-      allowNull: false,
-      type: DataTypes.STRING,
-    },
-    senha: {
-      type: DataTypes.STRING,
-      allowNull: false,
     },
   },
   {
@@ -28,4 +23,4 @@ const Pessoa = sequelize.define(
   }
 );
 
-module.exports = Pessoa;
+module.exports = Cliente;

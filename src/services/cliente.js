@@ -1,4 +1,4 @@
-const RepositoryExercicio = require("../repositories/exercicio");
+const RepositoryExercicio = require("../repositories/cliente");
 
 const repositorio = new RepositoryExercicio();
 
@@ -11,20 +11,20 @@ class ServicoExercicio {
     return repositorio.PegarTodos();
   }
 
-  async Add(id, nome, email, senha) {
-    if (isNaN(id) || nome == "" || email == "" || senha == "") {
+  async Add(nome, telefone) {
+    if (nome == "" || telefone == "") {
       throw new Error("Favor preencher os dados.");
     }
-    repositorio.Add(id, nome, email, senha);
+    repositorio.Add(nome, telefone);
   }
 
-  async Alterar(id, nome, email, senha) {
-    if (nome == "" || email == "" || senha == "") {
+  async Alterar(id, nome, telefone) {
+    if (nome == "" || telefone == "" ) {
       throw new Error("Favor preencher o nome.");
     } else if (id < 0 || isNaN(id)) {
       throw new Error("Favor preencher corretamente o id");
     }
-    repositorio.Alterar(id, nome, email, senha);
+    repositorio.Alterar(id, nome, telefone);
   }
 
   async Deletar(id) {

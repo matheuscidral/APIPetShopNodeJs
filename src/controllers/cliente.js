@@ -1,4 +1,4 @@
-const ServicoExercicio = require("../services/exercicio");
+const ServicoExercicio = require("../services/cliente");
 
 const servico = new ServicoExercicio();
 
@@ -29,7 +29,7 @@ class ControllerExercicio {
 
   async Add(req, res) {
     try {
-      servico.Add(req.body.id, req.body.nome, req.body.email, req.body.senha);
+      servico.Add(req.body.nome, req.body.telefone);
 
       res.status(201).json({
         message: "Adicionado com sucesso",
@@ -45,8 +45,7 @@ class ControllerExercicio {
       servico.Alterar(
         req.params.id,
         req.body.nome,
-        req.body.email,
-        req.body.senha
+        req.body.telefone
       );
 
       res.status(200).json({
