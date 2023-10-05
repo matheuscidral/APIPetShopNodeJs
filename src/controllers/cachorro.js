@@ -50,12 +50,12 @@ class ControllerCachorro {
   async UpdateCachorro(req, res) {
     try {
       const resultado = await service.UpdateCachorro(
-        req.params.id,
+        req.body.id,
         req.body.nome,
         req.body.dono
       );
       res.status(200).json({
-        cliente: resultado,
+        cachorro: resultado,
       });
     } catch {
       console.log(error);
@@ -68,9 +68,9 @@ class ControllerCachorro {
   async DeleteCachorro(req, res) {
     try {
       const resultado = await service.DeleteCachorro(req.params.id);
-      
+
       res.status(200).json({
-        cliente: resultado,
+        cachorro: resultado,
       });
     } catch {
       console.log(error);
