@@ -1,38 +1,38 @@
-const RepositoryExercicio = require("../repositories/cliente");
+const RepositoryCliente = require("../repositories/cliente");
 
-const repositorio = new RepositoryExercicio();
+const repositorio = new RepositoryCliente();
 
-class ServicoExercicio {
-  async PegarUm(id) {
-    return repositorio.PegarUm(id);
+class ServicoCliente {
+  async GetCliente(id) {
+    return repositorio.GetCliente(id);
   }
 
-  async PegarTodos() {
-    return repositorio.PegarTodos();
+  async GetClientes() {
+    return repositorio.GetClientes();
   }
 
-  async Add(nome, telefone) {
+  async AddCliente(nome, telefone) {
     if (nome == "" || telefone == "") {
       throw new Error("Favor preencher os dados.");
     }
-    repositorio.Add(nome, telefone);
+    repositorio.AddCliente(nome, telefone);
   }
 
-  async Alterar(id, nome, telefone) {
+  async UpdateCliente(id, nome, telefone) {
     if (nome == "" || telefone == "" ) {
       throw new Error("Favor preencher o nome.");
     } else if (id < 0 || isNaN(id)) {
       throw new Error("Favor preencher corretamente o id");
     }
-    repositorio.Alterar(id, nome, telefone);
+    repositorio.UpdateCliente(id, nome, telefone);
   }
 
-  async Deletar(id) {
-    if (id < 0 || isNaN(id) || id > this.PegarTodos().length) {
+  async DeleteCliente(id) {
+    if (id < 0 || isNaN(id) || id > this.GetClientes().length) {
       throw new Error("Favor preencher corretamente o id");
     }
-    repositorio.Deletar(id);
+    repositorio.DeleteCliente(id);
   }
 }
 
-module.exports = ServicoExercicio;
+module.exports = ServicoCliente;

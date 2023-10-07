@@ -50,7 +50,7 @@ class ControllerCachorro {
   async UpdateCachorro(req, res) {
     try {
       const resultado = await service.UpdateCachorro(
-        req.body.id,
+        req.params.id,
         req.body.nome,
         req.body.dono
       );

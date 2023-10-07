@@ -1,24 +1,24 @@
 const Cliente = require("../models/cliente.js");
 
-class RepositoryExercicio {
-  async PegarUm(id) {
+class RepositoryCliente {
+  async GetCliente(id) {
     return Cliente.findOne({
       where: { id },
     });
   }
 
-  async PegarTodos() {
+  async GetClientes() {
     return Cliente.findAll();
   }
 
-  async Add(nome, telefone) {
+  async AddCliente(nome, telefone) {
     return Cliente.create({
       nome,
       telefone
     });
   }
 
-  async Alterar(id, nome, telefone) {
+  async UpdateCliente(id, nome, telefone) {
     return Cliente.update(
       {
         nome,
@@ -30,11 +30,11 @@ class RepositoryExercicio {
     );
   }
 
-  async Deletar(id) {
+  async DeleteCliente(id) {
     return Cliente.destroy({
       where: { id },
     });
   }
 }
 
-module.exports = RepositoryExercicio;
+module.exports = RepositoryCliente;

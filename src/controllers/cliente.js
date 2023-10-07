@@ -1,11 +1,11 @@
-const ServicoExercicio = require("../services/cliente");
+const ServicoCliente = require("../services/cliente");
 
-const servico = new ServicoExercicio();
+const servico = new ServicoCliente();
 
-class ControllerExercicio {
-  async PegarUm(req, res) {
+class ControllerCliente {
+  async GetCliente(req, res) {
     try {
-      const result = await servico.PegarUm(req.params.id);
+      const result = await servico.GetCliente(req.params.id);
 
       res.status(200).json({
         nome: result,
@@ -15,9 +15,9 @@ class ControllerExercicio {
     }
   }
 
-  async PegarTodos(req, res) {
+  async GetClientes(req, res) {
     try {
-      const result = await servico.PegarTodos();
+      const result = await servico.GetClientes();
       res.status(201).json({
         nomes: result,
       });
@@ -27,9 +27,9 @@ class ControllerExercicio {
     }
   }
 
-  async Add(req, res) {
+  async AddCliente(req, res) {
     try {
-      servico.Add(req.body.nome, req.body.telefone);
+      servico.AddCliente(req.body.nome, req.body.telefone);
 
       res.status(201).json({
         message: "Adicionado com sucesso",
@@ -40,9 +40,9 @@ class ControllerExercicio {
     }
   }
 
-  async Alterar(req, res) {
+  async UpdateCliente(req, res) {
     try {
-      servico.Alterar(
+      servico.UpdateCliente(
         req.params.id,
         req.body.nome,
         req.body.telefone
@@ -56,9 +56,9 @@ class ControllerExercicio {
     }
   }
 
-  async Deletar(req, res) {
+  async DeleteCliente(req, res) {
     try {
-      servico.Deletar(req.params.id);
+      servico.DeleteCliente(req.params.id);
       res.status(200).json({
         message: "Deletado com sucesso",
       });
@@ -69,4 +69,4 @@ class ControllerExercicio {
   }
 }
 
-module.exports = ControllerExercicio;
+module.exports = ControllerCliente;
