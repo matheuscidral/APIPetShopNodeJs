@@ -6,4 +6,5 @@ module.exports = {
     host: "localhost",
     dialect: "mysql",
   },
+  secret: "M!nhaChav3S3cr3t4",
 };
