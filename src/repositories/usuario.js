@@ -1,47 +1,12 @@
-const Usuario = require("../models/usuario.js");
+const Usuario = require("../models/usuarios");
+const bcrypt = require("bcrypt");
 
-class RepositorioUsuario {
-  async GetUsuario(id) {
+class RepositoryUsuarios {
+  async PegarUmPorEmail(email) {
     return Usuario.findOne({
-      where: {
-        id,
-      },
-    });
-  }
-
-  async GetUsuarioPorEmail(email) {
-    return Usuario.findOne({
-      where: {
-        email,
-      },
-    });
-  }
-
-  async GetUsuarios() {
-    return Usuario.findAll();
-  }
-
-  async AddUsuario(usuario, isAdmin = false) {
-    const senha = await bcrypt.hash(usuario.senha, 10);
-
-    return Usuario.create({ ...usuario, senha, permissao: isAdmin ? 0 : 1 });
-  }
-
-  async UpdateUsuario(id, usuario) {
-    return Usuario.update(usuario, {
-      where: {
-        id,
-      },
-    });
-  }
-
-  async DeleteUsuario(id) {
-    return Usuario.destroy({
-      where: {
-        id,
-      },
+      where: { email },
     });
   }
 }
 
-module.exports = RepositorioUsuario;
+module.exports = RepositoryUsuarios;

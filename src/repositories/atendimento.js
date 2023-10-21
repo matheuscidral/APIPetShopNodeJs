@@ -1,42 +1,41 @@
-const Atendimento = require("../models/atendimento.js");
-const Cachorro = require("../models/cachorro.js");
+const Atendimento = require("../models/atendimentos");
+const Cachorro = require("../models/cachorros");
 
 class RepositoryAtendimento {
-  async GetAtendimento(id) {
+  async PegarUm(idAtendimentos) {
     return Atendimento.findOne({
-      where: { id }
+      where: { idAtendimentos },
+      include: [Cachorro],
     });
   }
 
-  async GetAtendimentos() {
+  async PegarTodos() {
     return Atendimento.findAll();
   }
 
-  async AddAtendimento(diahora, valor, idCachorro, concluido) {
+  async Add(horario, valor, idCachorro, status) {
     return Atendimento.create({
-      diahora,
+      horario,
       valor,
       idCachorro,
-      concluido,
+      status,
     });
   }
 
-  async UpdateAtendimento(id, diahora, valor, concluido) {
+  async Update(idAtendimentos, status) {
     return Atendimento.update(
       {
-        diahora,
-        valor,
-        concluido,
+        status,
       },
       {
-        where: { id },
+        where: { idAtendimentos },
       }
     );
   }
 
-  async DeleteAtendimento(id) {
+  async Delete(idAtendimentos) {
     return Atendimento.destroy({
-      where: { id },
+      where: { idAtendimentos },
     });
   }
 }

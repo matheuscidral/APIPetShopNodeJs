@@ -1,13 +1,14 @@
 const express = require("express");
-const ControllerCachorro = require("../controllers/cachorro");
+const ControllerCachorro = require('../controllers/cachorros');
+const authMiddleware = require("../middleware/auth");
 
-const controller = new ControllerCachorro();
+const cachorrosController = new ControllerCachorro();
 const router = express.Router();
 
-router.get("/api/getCachorro/:id", controller.GetCachorro);
-router.get("/api/getCachorros", controller.GetCachorros);
-router.post("/api/addCachorro", controller.AddCachorro);
-router.put("/api/updateCachorro/:id", controller.UpdateCachorro);
-router.delete("/api/deleteCachorro/:id", controller.DeleteCachorro);
+router.get('/api/cachorros/', authMiddleware, cachorrosController.PegarTodos);
+router.get('/api/cachorro/:id', authMiddleware, cachorrosController.PegarUm);
+router.post('/api/cachorro', authMiddleware, cachorrosController.Add);
+router.put('/api/cachorro/:id', authMiddleware, cachorrosController.Update);
+router.delete('/api/cachorro/:id', authMiddleware, cachorrosController.Delete);
 
 module.exports = router;

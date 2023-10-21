@@ -1,21 +1,18 @@
-const sequelize = require("../database");
 const { DataTypes } = require("sequelize");
-const Cliente = require("./cliente");
+const sequelize = require("../database");
+const Atendimento = require("./atendimentos");
 
 const Cachorro = sequelize.define(
   "cachorros",
   {
     id: {
       primaryKey: true,
-      autoIncrement: true,
       type: DataTypes.INTEGER,
     },
-
     nome: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-
     dono: {
       type: DataTypes.INTEGER,
       references: {
@@ -30,7 +27,7 @@ const Cachorro = sequelize.define(
   }
 );
 
-Cachorro.belongsTo(Cliente, { foreignKey: "id" });
-Cliente.hasMany(Cachorro, { foreignKey: "id" });
+Atendimento.belongsTo(Cachorro, { foreignKey: "idCachorro" });
+Cachorro.hasMany(Atendimento, { foreignKey: "idCachorro" });
 
 module.exports = Cachorro;

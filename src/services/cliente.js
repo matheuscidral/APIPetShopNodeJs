@@ -1,38 +1,41 @@
-const RepositoryCliente = require("../repositories/cliente");
+const RepositoryCliente = require("../repositories/clientes");
 
 const repositorio = new RepositoryCliente();
 
-class ServicoCliente {
-  async GetCliente(id) {
-    return repositorio.GetCliente(id);
+class ServiceCliente {
+  async PegarUm(id) {
+    return repositorio.PegarUm(id);
   }
 
-  async GetClientes() {
-    return repositorio.GetClientes();
+  async PegarTodos() {
+    return repositorio.PegarTodos();
   }
 
-  async AddCliente(nome, telefone) {
+  async PegarCachorros(dono) {
+    return repositorio.PegarCachorros(dono);
+  }
+
+  async Add(nome, telefone) {
     if (nome == "" || telefone == "") {
-      throw new Error("Favor preencher os dados.");
+      throw new Error("Favor preencher todos os dados");
     }
-    repositorio.AddCliente(nome, telefone);
+    repositorio.Add(nome, telefone);
   }
 
-  async UpdateCliente(id, nome, telefone) {
-    if (nome == "" || telefone == "" ) {
-      throw new Error("Favor preencher o nome.");
+  async Update(id, nome, telefone) {
+    if (nome == "" || telefone == "") {
+      throw new Error("Favor preencher todos os dados");
     } else if (id < 0 || isNaN(id)) {
       throw new Error("Favor preencher corretamente o id");
     }
-    repositorio.UpdateCliente(id, nome, telefone);
+    repositorio.Update(id, nome, telefone);
   }
-
-  async DeleteCliente(id) {
-    if (id < 0 || isNaN(id) || id > this.GetClientes().length) {
+  async Delete(id) {
+    if (id < 0 || isNaN(id)) {
       throw new Error("Favor preencher corretamente o id");
     }
-    repositorio.DeleteCliente(id);
+    repositorio.Delete(id);
   }
 }
 
-module.exports = ServicoCliente;
+module.exports = ServiceCliente;

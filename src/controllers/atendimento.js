@@ -1,71 +1,70 @@
-const ServicoAtendimento = require("../services/atendimento");
+const ServiceAtendimento = require("../services/atendimentos");
 
-const servico = new ServicoAtendimento();
+const servico = new ServiceAtendimento();
 
 class ControllerAtendimento {
-  async GetAtendimento(req, res) {
+  async PegarUm(req, res) {
     try {
-      const result = await servico.GetAtendimento(req.params.id);
+      const result = await servico.PegarUm(req.params.id);
 
       res.status(200).json({
         atendimento: result,
       });
     } catch (error) {
-      res.status(500).json({ message: "Erro ao pegar um atendimento" });
+      res.status(500).json({ message: "Erro ao encontrar atendimento" });
     }
   }
 
-  async GetAtendimentos(req, res) {
+  async PegarTodos(req, res) {
     try {
-      const result = await servico.GetAtendimentos();
-      res.status(201).json({
+      const result = await servico.PegarTodos();
+
+      res.status(200).json({
         atendimentos: result,
       });
     } catch (error) {
-      console.log(error);
       res.status(500).json({ message: "Erro ao listar atendimentos" });
     }
   }
 
-  async AddAtendimento(req, res) {
+  async Add(req, res) {
     try {
-      servico.AddAtendimento(req.body.diahora, req.body.valor, req.body.idCachorro, req.body.concluido);
+      servico.Add(
+        req.body.horario,
+        req.body.valor,
+        req.body.idCachorro,
+        req.body.status
+      );
 
       res.status(201).json({
         message: "Adicionado com sucesso",
       });
     } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: error });
+      res.status(500).json({ message: "Erro ao adicionar atendimento" });
     }
   }
 
-  async UpdateAtendimento(req, res) {
+  async Update(req, res) {
     try {
-      servico.UpdateAtendimento(
-        req.params.id,
-        req.body.diahora,
-        req.body.valor,
-        req.body.concluido,
-      );
+      servico.Update(req.params.id, req.body.status);
 
       res.status(200).json({
-        message: "Alterado com sucesso",
+        message: "Atendimento alterado com sucesso",
       });
     } catch (error) {
-      res.status(500).json({ message: "Erro ao alterar atendimento" });
+      res.status(500).json({ message: "Erro ao alterar" });
     }
   }
 
-  async DeleteAtendimento(req, res) {
+  async Delete(req, res) {
     try {
-      servico.DeleteAtendimento(req.params.id);
+      servico.Delete(req.params.id);
+
       res.status(200).json({
-        message: "Deletado com sucesso",
+        message: "Atendimento deletado com sucesso",
       });
     } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: "Erro ao deletar atendimento" });
+      res.status(500).json({ message: "Erro ao deletar" });
     }
   }
 }

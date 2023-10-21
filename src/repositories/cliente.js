@@ -1,28 +1,37 @@
-const Cliente = require("../models/cliente.js");
+const Cliente = require("../models/clientes");
+const Cachorro = require("../models/cachorros");
 
 class RepositoryCliente {
-  async GetCliente(id) {
+  async PegarUm(id, transaction) {
     return Cliente.findOne({
       where: { id },
+      transaction,
+      include: [Cachorro],
     });
   }
 
-  async GetClientes() {
+  async PegarTodos() {
     return Cliente.findAll();
   }
 
-  async AddCliente(nome, telefone) {
-    return Cliente.create({
-      nome,
-      telefone
+  async PegarCachorros(dono) {
+    return Cachorro.findAll({
+      where: { dono: dono },
     });
   }
 
-  async UpdateCliente(id, nome, telefone) {
+  async Add(nome, telefone) {
+    return Cliente.create({
+      nome,
+      telefone,
+    });
+  }
+
+  async Update(id, nome, telefone) {
     return Cliente.update(
       {
         nome,
-        telefone
+        telefone,
       },
       {
         where: { id },
@@ -30,7 +39,7 @@ class RepositoryCliente {
     );
   }
 
-  async DeleteCliente(id) {
+  async Delete(id) {
     return Cliente.destroy({
       where: { id },
     });

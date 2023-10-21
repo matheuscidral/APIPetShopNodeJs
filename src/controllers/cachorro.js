@@ -1,82 +1,65 @@
-const ServiceCachorro = require("../services/cachorro");
-const service = new ServiceCachorro();
+const ServiceCachorro = require("../services/cachorros");
+
+const servico = new ServiceCachorro();
 
 class ControllerCachorro {
-  async GetCachorro(req, res) {
+  async PegarUm(req, res) {
     try {
-      const resultado = await service.GetCachorro(req.params.id);
+      const result = await servico.PegarUm(req.params.id);
 
       res.status(200).json({
-        cachorro: resultado,
+        nome: result,
       });
     } catch (error) {
-      console.log(error);
-      res.status(500).json({
-        message: error,
-      });
+      res.status(500).json({ message: "Erro ao pegar um nome" });
     }
   }
 
-  async GetCachorros(_, res) {
+  async PegarTodos(req, res) {
     try {
-      const resultado = await service.GetCachorros();
+      const result = await servico.PegarTodos();
 
       res.status(200).json({
-        cachorros: resultado,
+        nome: result,
       });
     } catch (error) {
-      console.log(error);
-      res.status(500).json({
-        message: error,
-      });
+      res.status(500).json({ message: "Erro ao listar nomes" });
     }
   }
 
-  async AddCachorro(req, res) {
+  async Add(req, res) {
     try {
-      const resultado = await service.AddCachorro(req.body.nome, req.body.dono);
+      servico.Add(req.body.nome, req.body.dono);
 
-      res.status(200).json({
-        cachorro: resultado,
+      res.status(201).json({
+        message: "Adicionado com sucesso",
       });
     } catch (error) {
-      console.log(error);
-      res.status(500).json({
-        message: error,
-      });
+      res.status(500).json({ message: "Erro ao adicionar cachorro" });
     }
   }
 
-  async UpdateCachorro(req, res) {
+  async Update(req, res) {
     try {
-      const resultado = await service.UpdateCachorro(
-        req.params.id,
-        req.body.nome,
-        req.body.dono
-      );
+      servico.Update(req.params.id, req.body.nome);
+
       res.status(200).json({
-        cachorro: resultado,
+        message: "Alterado com sucesso",
       });
-    } catch {
-      console.log(error);
-      res.status(500).json({
-        message: error,
-      });
+    } catch (error) {
+      res.status(500).json({ message: "Erro ao alterar" });
     }
   }
 
-  async DeleteCachorro(req, res) {
+  async Delete(req, res) {
     try {
-      const resultado = await service.DeleteCachorro(req.params.id);
+      servico.Delete(req.params.id);
 
       res.status(200).json({
-        cachorro: resultado,
+        message: "Deletado com sucesso",
       });
-    } catch {
-      console.log(error);
-      res.status(500).json({
-        message: error,
-      });
+    } catch (error) {
+      res.status(500).json({ message: "Erro ao deletar" });
     }
   }
 }

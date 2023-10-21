@@ -1,15 +1,14 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../database");
-const Cachorro = require("./cachorro");
 
 const Atendimento = sequelize.define(
   "atendimentos",
   {
-    id: {
+    idAtendimentos: {
       primaryKey: true,
       type: DataTypes.INTEGER,
     },
-    diahora: {
+    horario: {
       type: DataTypes.DATE,
       allowNull: false,
     },
@@ -24,7 +23,7 @@ const Atendimento = sequelize.define(
         key: "id",
       },
     },
-    concluido: {
+    status: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -34,8 +33,5 @@ const Atendimento = sequelize.define(
     updatedAt: false,
   }
 );
-
-Atendimento.belongsTo(Cachorro, { foreignKey: "id" });
-Cachorro.hasMany(Atendimento, { foreignKey: "id" });
 
 module.exports = Atendimento;

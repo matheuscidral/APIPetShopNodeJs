@@ -1,28 +1,29 @@
-const Cachorro = require("../models/cachorro");
+const Cachorro = require("../models/cachorros");
+const Atendimento = require("../models/atendimentos");
 
-class RepositorieCachorro {
-  async GetCachorro(id) {
+class RepositoryCachorro {
+  async PegarUm(id) {
     return Cachorro.findOne({
       where: { id },
+      include: [Atendimento],
     });
   }
 
-  async GetCachorros() {
+  async PegarTodos() {
     return Cachorro.findAll();
   }
 
-  async AddCachorro(nome, dono) {
+  async Add(nome, dono) {
     return Cachorro.create({
-      nome: nome,
-      dono: dono,
+      nome,
+      dono,
     });
   }
 
-  async UpdateCachorro(id, nome, dono) {
+  async Update(id, nome) {
     return Cachorro.update(
       {
-        nome: nome,
-        dono: dono,
+        nome,
       },
       {
         where: { id },
@@ -30,11 +31,11 @@ class RepositorieCachorro {
     );
   }
 
-  async DeleteCachorro(id) {
+  async Delete(id) {
     return Cachorro.destroy({
       where: { id },
     });
   }
 }
 
-module.exports = RepositorieCachorro;
+module.exports = RepositoryCachorro;
