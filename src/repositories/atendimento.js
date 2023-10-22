@@ -1,43 +1,46 @@
-const Atendimento = require("../models/atendimentos");
-const Cachorro = require("../models/cachorros");
+const Atendimento = require("../models/atendimento");
+const Cachorro = require("../models/cachorro");
 
-class RepositoryAtendimento {
-  async PegarUm(idAtendimentos) {
+class RepositorieAtendimento {
+  async GetAtendimento(atendimento_id) {
     return Atendimento.findOne({
-      where: { idAtendimentos },
+      where: { atendimento_id },
       include: [Cachorro],
     });
   }
 
-  async PegarTodos() {
+  async GetAtendimentos() {
     return Atendimento.findAll();
   }
 
-  async Add(horario, valor, idCachorro, status) {
+  async AddAtendimento(data, hora, concluido, cachorro_id) {
     return Atendimento.create({
-      horario,
-      valor,
-      idCachorro,
-      status,
+      data: data,
+      hora: hora,
+      concluido: concluido,
+      cachorro_id: cachorro_id,
     });
   }
 
-  async Update(idAtendimentos, status) {
+  async UpdateAtendimento(atendimento_id, data, hora, concluido, cachorro_id) {
     return Atendimento.update(
       {
-        status,
+        data: data,
+        hora: hora,
+        concluido: concluido,
+        cachorro_id: cachorro_id,
       },
       {
-        where: { idAtendimentos },
+        where: { atendimento_id },
       }
     );
   }
 
-  async Delete(idAtendimentos) {
+  async DeleteAtendimento(atendimento_id) {
     return Atendimento.destroy({
-      where: { idAtendimentos },
+      where: { atendimento_id },
     });
   }
 }
 
-module.exports = RepositoryAtendimento;
+module.exports = RepositorieAtendimento;

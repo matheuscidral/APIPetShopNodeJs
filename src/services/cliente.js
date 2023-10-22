@@ -1,40 +1,41 @@
-const RepositoryCliente = require("../repositories/clientes");
-
-const repositorio = new RepositoryCliente();
+const RepositorieCliente = require("../repositories/cliente");
+const cliente = new RepositorieCliente();
 
 class ServiceCliente {
-  async PegarUm(id) {
-    return repositorio.PegarUm(id);
-  }
-
-  async PegarTodos() {
-    return repositorio.PegarTodos();
-  }
-
-  async PegarCachorros(dono) {
-    return repositorio.PegarCachorros(dono);
-  }
-
-  async Add(nome, telefone) {
-    if (nome == "" || telefone == "") {
-      throw new Error("Favor preencher todos os dados");
+  async GetCliente(cliente_id, transaction) {
+    if (isNaN(cliente_id)) {
+      throw new Error("Parâmetro Inválido!");
     }
-    repositorio.Add(nome, telefone);
+    return cliente.GetCliente(cliente_id, transaction);
   }
 
-  async Update(id, nome, telefone) {
-    if (nome == "" || telefone == "") {
-      throw new Error("Favor preencher todos os dados");
-    } else if (id < 0 || isNaN(id)) {
-      throw new Error("Favor preencher corretamente o id");
-    }
-    repositorio.Update(id, nome, telefone);
+  async GetClientes() {
+    return cliente.GetClientes();
   }
-  async Delete(id) {
-    if (id < 0 || isNaN(id)) {
-      throw new Error("Favor preencher corretamente o id");
+
+  async AddCliente(email, senha, nome, telefone) {
+    return cliente.AddCliente(email, senha, nome, telefone);
+  }
+
+  async UpdateCliente(id, nome, telefone) {
+    if (isNaN(id)) {
+      throw new Error("Parâmetro Inválido!");
     }
-    repositorio.Delete(id);
+    return cliente.UpdateCliente(id, nome, telefone);
+  }
+
+  async DeleteCliente(id) {
+    if (isNaN(id)) {
+      throw new Error("Parâmetro Inválido!");
+    }
+    return cliente.DeleteCliente(id);
+  }
+
+  async GetCachorrosCliente(cliente_id) {
+    if (isNaN(cliente_id)) {
+      throw new Error("Parâmetro Inválido!");
+    }
+    return cliente.GetCachorrosCliente(cliente_id);
   }
 }
 

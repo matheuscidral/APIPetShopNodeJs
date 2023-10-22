@@ -1,41 +1,46 @@
-const Cachorro = require("../models/cachorros");
-const Atendimento = require("../models/atendimentos");
+const Cachorro = require("../models/cachorro");
+const Atendimento = require("../models/atendimento");
 
-class RepositoryCachorro {
-  async PegarUm(id) {
+class RepositorieCachorro {
+  async GetCachorro(cachorro_id) {
     return Cachorro.findOne({
-      where: { id },
+      where: { cachorro_id },
       include: [Atendimento],
     });
   }
 
-  async PegarTodos() {
+  async GetCachorros() {
     return Cachorro.findAll();
   }
 
-  async Add(nome, dono) {
+  async AddCachorro(nome, cliente_id) {
     return Cachorro.create({
-      nome,
-      dono,
+      nome: nome,
+      cliente_id: cliente_id,
     });
   }
 
-  async Update(id, nome) {
+  async UpdateCachorro(cachorro_id, nome, cliente_id) {
     return Cachorro.update(
       {
-        nome,
+        nome: nome,
+        cliente_id: cliente_id,
       },
       {
-        where: { id },
+        where: { cachorro_id },
       }
     );
   }
 
-  async Delete(id) {
+  async DeleteCachorro(cachorro_id) {
+    Atendimento.destroy({
+      where: { cachorro_id: cachorro_id },
+    });
+
     return Cachorro.destroy({
-      where: { id },
+      where: { cachorro_id },
     });
   }
 }
 
-module.exports = RepositoryCachorro;
+module.exports = RepositorieCachorro;

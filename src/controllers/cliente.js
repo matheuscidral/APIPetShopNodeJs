@@ -1,79 +1,99 @@
-const ServiceCliente = require("../services/clientes");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const config = require("../config");
-
-const servico = new ServiceCliente();
+const ServiceCliente = require("../services/cliente");
+const service = new ServiceCliente();
 
 class ControllerCliente {
-  async PegarUm(req, res) {
+  async GetCachorrosCliente(req, res) {
     try {
-      const result = await servico.PegarUm(req.params.id);
-
+      const resultado = await service.GetCachorrosCliente(
+        req.params.cliente_id
+      );
       res.status(200).json({
-        dados: result,
+        cachorros: resultado,
       });
     } catch (error) {
-      res.status(500).json({ message: "Erro ao pegar um nome " });
+      console.log(error);
+      res.status(500).json({
+        message: error,
+      });
     }
   }
 
-  async PegarTodos(req, res) {
+  async GetCliente(req, res) {
     try {
-      const result = await servico.PegarTodos();
-
+      const resultado = await service.GetCliente(req.params.cliente_id);
       res.status(200).json({
-        nome: result,
+        cliente: resultado,
       });
     } catch (error) {
-      res.status(500).json({ message: "Erro ao listar nomes " });
+      console.log(error);
+      res.status(500).json({
+        message: error,
+      });
     }
   }
 
-  async PegarCachorros(req, res) {
+  async GetClientes(_, res) {
     try {
-      const result = await servico.PegarCachorros(req.params.dono);
-
+      const resultado = await service.GetClientes();
       res.status(200).json({
-        dados: result,
+        clientes: resultado,
       });
     } catch (error) {
-      res.status(500).json({ message: "Erro ao encontrar cachorros " });
+      console.log(error);
+      res.status(500).json({
+        message: error,
+      });
     }
   }
 
-  async Add(req, res) {
+  async AddCliente(req, res) {
     try {
-      servico.Add(req.body.nome, req.body.telefone);
-
-      res.status(201).json({
-        message: "Adicionado com sucesso",
+      const resultado = await service.AddCliente(
+        req.body.email,
+        req.body.senha,
+        req.body.nome,
+        req.body.telefone
+      );
+      res.status(200).json({
+        clientes: resultado,
       });
     } catch (error) {
-      res.status(500).json({ message: "Erro ao adicionar cliente" });
+      console.log(error);
+      res.status(500).json({
+        message: error,
+      });
     }
   }
 
-  async Update(req, res) {
+  async UpdateCliente(req, res) {
     try {
-      servico.Update(req.params.id, req.body.nome, req.body.telefone);
-
+      const resultado = await service.UpdateCliente(
+        req.params.id,
+        req.body.nome,
+        req.body.telefone
+      );
       res.status(200).json({
-        message: "Alterado com sucesso",
+        cliente: resultado,
       });
-    } catch (error) {
-      res.status(500).json({ message: "Erro ao alterar" });
+    } catch {
+      console.log(error);
+      res.status(500).json({
+        message: error,
+      });
     }
   }
 
-  async Delete(req, res) {
+  async DeleteCliente(req, res) {
     try {
-      servico.Delete(req.params.id);
+      const resultado = await service.DeleteCliente(req.params.id);
       res.status(200).json({
-        message: "Deletado com sucesso",
+        cliente: resultado,
       });
     } catch (error) {
-      res.status(500).json({ message: "Erro ao deletar" });
+      console.log(error);
+      res.status(500).json({
+        message: error,
+      });
     }
   }
 }

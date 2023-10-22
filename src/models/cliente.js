@@ -1,23 +1,35 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../database");
-const Cachorro = require("./cachorros");
-const Usuario = require("./usuarios");
+const Cachorro = require("./cachorro");
+const Usuario = require("./usuario");
 
 const Cliente = sequelize.define(
   "clientes",
   {
-    id: {
+    cliente_id: {
+      field: "cliente_id",
       primaryKey: true,
+      autoIncrement: true,
       type: DataTypes.INTEGER,
     },
+
     nome: {
       type: DataTypes.STRING,
       allowNull: false,
     },
+
     telefone: {
-      unique: true,
-      allowNull: false,
       type: DataTypes.STRING,
+      unique: true,
+    },
+
+    usuario_id: {
+      field: "usuario_id",
+      type: DataTypes.INTEGER,
+      references: {
+        model: "usuarios",
+        key: "usuario_id",
+      },
     },
   },
   {
@@ -26,7 +38,7 @@ const Cliente = sequelize.define(
   }
 );
 
-Cachorro.belongsTo(Cliente, { foreignKey: "dono" });
-Cliente.hasMany(Cachorro, { foreignKey: "dono" });
+Cachorro.belongsTo(Cliente, { foreignKey: "cliente_id" });
+Cliente.hasMany(Cachorro, { foreignKey: "cliente_id" });
 
 module.exports = Cliente;

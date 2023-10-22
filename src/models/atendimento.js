@@ -4,28 +4,34 @@ const sequelize = require("../database");
 const Atendimento = sequelize.define(
   "atendimentos",
   {
-    idAtendimentos: {
+    atendimento_id: {
       primaryKey: true,
+      autoIncrement: true,
       type: DataTypes.INTEGER,
     },
-    horario: {
-      type: DataTypes.DATE,
+
+    data: {
+      type: DataTypes.DATEONLY,
       allowNull: false,
     },
-    valor: {
-      type: DataTypes.FLOAT,
+
+    hora: {
+      type: DataTypes.TIME,
       allowNull: false,
     },
-    idCachorro: {
+
+    concluido: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
+
+    cachorro_id: {
+      field: "cachorro_id",
       type: DataTypes.INTEGER,
       references: {
         model: "cachorros",
-        key: "id",
+        key: "cachorro_id",
       },
-    },
-    status: {
-      type: DataTypes.STRING,
-      allowNull: false,
     },
   },
   {

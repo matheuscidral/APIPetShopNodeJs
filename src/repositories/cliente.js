@@ -1,49 +1,55 @@
-const Cliente = require("../models/clientes");
-const Cachorro = require("../models/cachorros");
+const Cliente = require("../models/cliente");
+const Cachorro = require("../models/cachorro");
+const Usuario = require("../models/usuario");
 
-class RepositoryCliente {
-  async PegarUm(id, transaction) {
+class RepositorieCliente {
+  async GetCliente(cliente_id, transaction) {
     return Cliente.findOne({
-      where: { id },
+      where: { cliente_id },
       transaction,
       include: [Cachorro],
     });
   }
 
-  async PegarTodos() {
+  async GetClientes() {
     return Cliente.findAll();
   }
 
-  async PegarCachorros(dono) {
-    return Cachorro.findAll({
-      where: { dono: dono },
+  async AddCliente(email, senha, nome, telefone) {
+    const { dataValues: usuario } = await Usuario.create({
+      email,
+      senha,
+      permissao: 1,
     });
-  }
 
-  async Add(nome, telefone) {
     return Cliente.create({
-      nome,
-      telefone,
+      nome: nome,
+      telefone: telefone,
+      usuario_id: usuario.usuario_id,
     });
   }
 
-  async Update(id, nome, telefone) {
+  async UpdateCliente(id, nome, telefone) {
     return Cliente.update(
       {
-        nome,
-        telefone,
+        nome: nome,
+        telefone: telefone,
       },
       {
-        where: { id },
+        where: { cliente_id: id },
       }
     );
   }
 
-  async Delete(id) {
+  async DeleteCliente(id) {
+    Usuario.destroy({
+      where: { usuario_id: id },
+    });
+
     return Cliente.destroy({
-      where: { id },
+      where: { cliente_id: id },
     });
   }
 }
 
-module.exports = RepositoryCliente;
+module.exports = RepositorieCliente;

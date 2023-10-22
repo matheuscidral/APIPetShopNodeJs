@@ -4,21 +4,26 @@ const sequelize = require("../database");
 const Usuario = sequelize.define(
   "usuarios",
   {
-    id: {
+    usuario_id: {
+      field: "usuario_id",
       primaryKey: true,
+      autoIncrement: true,
       type: DataTypes.INTEGER,
     },
+
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
+
     senha: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    permissao: {
+
+    nivel_permissao: {
       type: DataTypes.INTEGER,
-      allowNull: false,
     },
   },
   {

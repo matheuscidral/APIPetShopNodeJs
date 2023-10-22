@@ -1,37 +1,40 @@
-const RepositoryAtendimento = require("../repositories/atendimentos");
-
-const repositorio = new RepositoryAtendimento();
+const RepositorieAtendimento = require("../repositories/atendimento");
+const repositorie = new RepositorieAtendimento();
 
 class ServiceAtendimento {
-  async PegarUm(idAtendimentos) {
-    return repositorio.PegarUm(idAtendimentos);
-  }
-
-  async PegarTodos() {
-    return repositorio.PegarTodos();
-  }
-
-  async Add(horario, valor, idCachorro, status) {
-    if (horario == "" || !valor || isNaN(idCachorro || status == "")) {
-      throw new Error("Favor preencher todos os dados");
+  async GetAtendimento(atendimento_id) {
+    if (isNaN(atendimento_id)) {
+      throw new Error("Parâmetro Inválido!");
     }
-    repositorio.Add(horario, valor, idCachorro, status);
+    return repositorie.GetAtendimento(atendimento_id);
   }
 
-  async Update(idAtendimentos, status) {
-    if (status == "") {
-      throw new Error("Favor preencher todos os dados");
-    } else if (idAtendimentos < 0 || isNaN(idAtendimentos)) {
-      throw new Error("Favor preencher corretamente o id");
-    }
-    repositorio.Update(idAtendimentos, status);
+  async GetAtendimentos() {
+    return repositorie.GetAtendimentos();
   }
 
-  async Delete(idAtendimentos) {
-    if (idAtendimentos < 0 || isNaN(idAtendimentos)) {
-      throw new Error("Favor preencher corretamente o id");
+  async AddAtendimento(data, hora, concluido, cachorro_id) {
+    return repositorie.AddAtendimento(data, hora, concluido, cachorro_id);
+  }
+
+  async UpdateAtendimento(atendimento_id, data, hora, concluido, cachorro_id) {
+    if (isNaN(atendimento_id)) {
+      throw new Error("Parâmetro Inválido!");
     }
-    repositorio.Delete(idAtendimentos);
+    return repositorie.UpdateAtendimento(
+      atendimento_id,
+      data,
+      hora,
+      concluido,
+      cachorro_id
+    );
+  }
+
+  async DeleteAtendimento(atendimento_id) {
+    if (isNaN(atendimento_id)) {
+      throw new Error("Parâmetro Inválido!");
+    }
+    return repositorie.DeleteAtendimento(atendimento_id);
   }
 }
 
